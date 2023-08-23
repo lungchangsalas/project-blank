@@ -1,0 +1,51 @@
+#--- Uncomment this line for production or testing server
+
+
+#--- Allow remote API access; change "*" to "your-domain.com" for better security
+#--- Note: require Headers mod enabled (sudo a2enmod headers)
+#Header add Access-Control-Allow-Origin "*"
+
+# Security Headers
+<IfModule mod_headers.c>
+	Header set Content-Security-Policy "upgrade-insecure-requests"
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains;" env=HTTPS
+	Header set X-XSS-Protection "1; mode=block"
+	Header set X-Frame-Options SAMEORIGIN
+	Header set X-Content-Type-Options nosniff
+	Header set Referrer-Policy "no-referrer-when-downgrade"
+</IfModule>
+
+<IfModule mod_deflate.c>
+	 AddOutputFilterByType DEFLATE application/javascript
+	 AddOutputFilterByType DEFLATE application/rss+xml
+	 AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+	 AddOutputFilterByType DEFLATE application/x-font
+	 AddOutputFilterByType DEFLATE application/x-font-opentype
+	 AddOutputFilterByType DEFLATE application/x-font-otf
+	 AddOutputFilterByType DEFLATE application/x-font-truetype
+	 AddOutputFilterByType DEFLATE application/x-font-ttf
+	 AddOutputFilterByType DEFLATE application/x-javascript
+	 AddOutputFilterByType DEFLATE application/xhtml+xml
+	 AddOutputFilterByType DEFLATE application/xml
+	 AddOutputFilterByType DEFLATE font/opentype
+	 AddOutputFilterByType DEFLATE font/otf
+	 AddOutputFilterByType DEFLATE font/ttf
+	 AddOutputFilterByType DEFLATE image/svg+xml
+	 AddOutputFilterByType DEFLATE image/x-icon
+	 AddOutputFilterByType DEFLATE text/css
+	 AddOutputFilterByType DEFLATE text/html
+	 AddOutputFilterByType DEFLATE text/javascript
+	 AddOutputFilterByType DEFLATE text/plain
+	 AddOutputFilterByType DEFLATE text/xml
+</IfModule>
+
+#--- URL rewrite
+#--- Note: require Headers mod enabled (sudo a2enmod rewrite)
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+
+
